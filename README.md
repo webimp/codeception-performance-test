@@ -11,7 +11,7 @@ I click button 6s
 Add PerformanceTest to your composer.json
 
 ```yaml
-  "require": {
+  "require-dev": {
     ...
     "webimp/codeception-performance-test": "dev-master",
 ```
@@ -33,4 +33,5 @@ settings:
 extensions:
     enabled:
         - Codeception\Extension\PerformanceTest
+            benchmark: 3
 ```
