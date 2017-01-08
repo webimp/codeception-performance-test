@@ -39,6 +39,7 @@ class PerformanceTest extends \Codeception\Platform\Extension
     static $events = array(
         Events::TEST_BEFORE  => 'beforeTest',
         Events::TEST_END     => 'afterTest',
+        Events::SUITE_BEFORE => 'beforeSuite',
         Events::SUITE_AFTER  => 'afterSuite',
         Events::STEP_BEFORE  => 'beforeStep',
         Events::STEP_AFTER   => 'afterStep'
@@ -89,6 +90,13 @@ class PerformanceTest extends \Codeception\Platform\Extension
         $test->time = $time;
 
         self::$testTimes[] = $test;
+    }
+
+    // reset times and not performant tests arrays, in case multiple suites are launched
+	public function beforeSuite(SuiteEvent $e)
+	{
+		self::$testTimes                = [];
+		self::$notPerformantStepsByTest = [];
     }
 
     public function afterSuite(SuiteEvent $e)
