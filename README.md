@@ -13,7 +13,7 @@ Add PerformanceTest to your composer.json
 ```yaml
   "require": {
     ...
-    "webimp/codeception-performance-test": "1.*.*",
+    "webimp/codeception-performance-test": "dev-master",
 ```
 
 ## Usage
