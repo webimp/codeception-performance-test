@@ -1,5 +1,5 @@
 # PerformanceTest
-Codeception Extension to measure the performance of your tests. Compatible with Codeception 2.2.7.
+Codeception Extension to list out slow steps during the test. Compatible with [Codeception 2.2.7](http://codeception.com).
 
 After running your tests you will see a Performance Report of your slow tests:
 ```bash
@@ -8,7 +8,7 @@ I click button 6s
 ```
 
 ## Installation
-Add PerformanceTest to your composer.json
+Add PerformanceTest to your `composer.json`:
 
 ```yaml
   "require-dev": {
@@ -17,7 +17,7 @@ Add PerformanceTest to your composer.json
 ```
 
 ## Usage
-Add this to your extensions line at the bottom of your codeception.yml:
+Add this to your extensions line at the bottom of your `codeception.yml`:
 
 ```yaml
 actor: Tester
@@ -34,4 +34,9 @@ extensions:
     enabled:
         - Codeception\Extension\PerformanceTest:
             benchmark: 3 # min seconds for step to be marked as "slow"
+```
+
+Include the file into your `_bootstrap.php`:
+```php
+include('./vendor/webimp/codeception-performance-test/src/PerformanceTest.php');
 ```
