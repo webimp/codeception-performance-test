@@ -13,7 +13,7 @@ Add PerformanceTest to your composer.json
 ```yaml
   "require-dev": {
     ...
-    "webimp/codeception-performance-test": "dev-master",
+    "webimp/codeception-performance-test": "1.0.*",
 ```
 
 ## Usage
@@ -33,5 +33,5 @@ settings:
 extensions:
     enabled:
         - Codeception\Extension\PerformanceTest
-            benchmark: 3
+            benchmark: 3 # min seconds for step to be marked as "slow"
 ```
