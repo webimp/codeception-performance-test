@@ -7,14 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace Codeception\Extension;
-
-use Codeception\Events;
-use Codeception\Event\SuiteEvent;
-use Codeception\Event\TestEvent;
-use Codeception\Event\StepEvent;
-
-class PerformanceTest extends \Codeception\Platform\Extension
+class PerformanceTest extends \Codeception\Extension
 {
     // maximum time allowed for a step to perform (seconds)
     public static $maxStepPerformanceTime = 1;
@@ -33,29 +26,29 @@ class PerformanceTest extends \Codeception\Platform\Extension
 
     // we are listening for events
     static $events = array(
-        Events::TEST_BEFORE  => 'beforeTest',
-        Events::TEST_END     => 'afterTest',
-        Events::SUITE_BEFORE => 'beforeSuite',
-        Events::SUITE_AFTER  => 'afterSuite',
-        Events::STEP_BEFORE  => 'beforeStep',
-        Events::STEP_AFTER   => 'afterStep'
+        'test.before'  => 'beforeTest',
+        'test.end'     => 'afterTest',
+        'suite.before' => 'beforeSuite',
+        'suite.after'  => 'afterSuite',
+        'step.before'  => 'beforeStep',
+        'step.after'   => 'afterStep'
     );
 
     // we are printing test status and time taken
-    public function beforeTest(TestEvent $e)
+    public function beforeTest(\Codeception\Event\TestEvent $e)
     {
         self::$tmpCurrentTest = \Codeception\Test\Descriptor::getTestAsString($e->getTest());
     }
 
     // we are printing test status and time taken
-    public function beforeStep(StepEvent $e)
+    public function beforeStep(\Codeception\Event\StepEvent $e)
     {
         list($usec, $sec)       = explode(" ", microtime());
         self::$tmpStepStartTime = (float) $sec;
     }
 
     // we are printing test status and time taken
-    public function afterStep(StepEvent $e)
+    public function afterStep(\Codeception\Event\StepEvent $e)
     {
         list($usec, $sec) = explode(" ", microtime());
         $stepEndTime      = (float) $sec;
@@ -73,7 +66,7 @@ class PerformanceTest extends \Codeception\Platform\Extension
         }
     }
 
-    public function afterTest(TestEvent $e)
+    public function afterTest(\Codeception\Event\TestEvent $e)
     {
         $test       = new \stdClass;
         $test->name = \Codeception\Test\Descriptor::getTestAsString($e->getTest());
@@ -89,13 +82,13 @@ class PerformanceTest extends \Codeception\Platform\Extension
     }
 
     // reset times and slow test arrays, in case multiple suites are launched
-	public function beforeSuite(SuiteEvent $e)
+	public function beforeSuite(\Codeception\Event\SuiteEvent $e)
 	{
 		self::$testTimes       = [];
 		self::$slowStepsByTest = [];
     }
 
-    public function afterSuite(SuiteEvent $e)
+    public function afterSuite(\Codeception\Event\SuiteEvent $e)
     {
         $this->writeln(str_pad('Slow Steps (more than ' . self::$maxStepPerformanceTime . 's) ', $self::padding, '-'));
 
