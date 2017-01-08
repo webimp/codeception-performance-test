@@ -3,7 +3,7 @@ Codeception Extension to list out slow steps during the test. Compatible with [C
 
 After running your tests you will see a Performance Report of your slow tests:
 ```bash
-Slow Steps (more than 3s) ----------------------
+Slow Steps (more than 2.5s) ----------------------
 I click button 6s
 ```
 
@@ -33,7 +33,7 @@ settings:
 extensions:
     enabled:
         - Codeception\Extension\PerformanceTest:
-            benchmark: 3 # min seconds for step to be marked as "slow"
+            benchmark: 2.5 # min seconds for step to be marked as "slow"
 ```
 
 Include the file into your `_bootstrap.php`:
