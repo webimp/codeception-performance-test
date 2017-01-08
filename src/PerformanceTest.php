@@ -40,7 +40,7 @@ class PerformanceTest extends \Codeception\Extension
     // we are printing test status and time taken
     public function beforeTest(\Codeception\Event\TestEvent $e)
     {
-        $this->$tmpCurrentTest = \Codeception\Test\Descriptor::getTestAsString($e->getTest());
+        self::$tmpCurrentTest = \Codeception\Test\Descriptor::getTestAsString($e->getTest());
     }
 
     // we are printing test status and time taken
