@@ -1,7 +1,7 @@
 {
     "name":"webimp/codeception-performance-test",
     "description":"Codeception Extension to measure the performance of your tests",
-    "keywords":["performance", "acceptance testing", "functional testing", "unit testing", "tdd"],
+    "keywords":["performance", "acceptance testing", "functional testing", "unit testing", "tdd", "php"],
     "homepage":"https://github.com/webimp/codeception-performance-test",
 
     "type":"library",
