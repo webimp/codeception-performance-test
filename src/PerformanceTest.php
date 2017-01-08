@@ -6,6 +6,7 @@
  * @copyright   Copyright (C) 2017 Web Imp Pte Ltd. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
+namespace Codeception\Extension;
 
 class PerformanceTest extends \Codeception\Extension
 {
