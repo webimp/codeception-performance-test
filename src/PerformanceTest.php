@@ -59,7 +59,7 @@ class PerformanceTest extends \Codeception\Extension
 
         $stepTime = $stepEndTime - self::$tmpStepStartTime;
 
-        if ($stepTime > $this->config['benchmark']) {
+        if ($stepTime >= $this->config['benchmark']) {
             $currentStep = (string) $e->getStep();
             $step        = new \stdClass;
             $step->name  = $currentStep;
@@ -93,13 +93,13 @@ class PerformanceTest extends \Codeception\Extension
 
     public function afterSuite(\Codeception\Event\SuiteEvent $e)
     {
-        $this->writeln(str_pad('Slow Steps (more than ' . $this->config['benchmark'] . 's) ', $this->config['padding'], '-'));
+        $this->writeln('<bold>' . str_pad('Slow Steps (more than ' . $this->config['benchmark'] . 's) ', $this->config['padding'], '-') . '</bold>');
 
         foreach (self::$slowStepsByTest as $testname => $steps) {
-            $this->writeln(' ' . $testname);
+            $this->writeln('  ' . $testname);
 
             foreach ($steps as $step) {
-                $this->writeln('  ' . $step->name . '(' . $step->time . 's)');
+                $this->writeln('<info>    ' . $step->name . ' (' . $step->time . ' s)' . '</info>');
             }
         }
     }
