@@ -13,18 +13,19 @@ class PerformanceTest extends \Codeception\Extension
     // maximum time allowed for a step to perform (seconds)
     protected $config = [
         'benchmark' => 3,
-        'padding'   => 50,
+        'padding'   => 120,
     ];
 
-    private static $testTimes             = [];
-    private static $slowStepsByTest       = [];
-    private static $tmpCurrentTest        = 0;
-    private static $tmpStepStartTime      = 0;
+    private static $testTimes        = [];
+    private static $slowStepsByTest  = [];
+    private static $tmpCurrentTest   = 0;
+    private static $tmpStepStartTime = 0;
 
 
     public function _initialize()
     {
-        $this->options['silent'] = false; // turn on printing for this extension
+        // turn on printing for this extension
+        $this->options['silent'] = false;
     }
 
     // we are listening for events
@@ -84,10 +85,10 @@ class PerformanceTest extends \Codeception\Extension
     }
 
     // reset times and slow test arrays, in case multiple suites are launched
-	public function beforeSuite(\Codeception\Event\SuiteEvent $e)
-	{
-		self::$testTimes       = [];
-		self::$slowStepsByTest = [];
+    public function beforeSuite(\Codeception\Event\SuiteEvent $e)
+    {
+        self::$testTimes       = [];
+        self::$slowStepsByTest = [];
     }
 
     public function afterSuite(\Codeception\Event\SuiteEvent $e)
@@ -95,7 +96,7 @@ class PerformanceTest extends \Codeception\Extension
         $this->writeln(str_pad('Slow Steps (more than ' . $this->config['benchmark'] . 's) ', $this->config['padding'], '-'));
 
         foreach (self::$slowStepsByTest as $testname => $steps) {
-            $this->writeln(str_pad(' ' . $testname . ' ', $this->config['padding'], '-'));
+            $this->writeln(' ' . $testname);
 
             foreach ($steps as $step) {
                 $this->writeln('  ' . $step->name . '(' . $step->time . 's)');
