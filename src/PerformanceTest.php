@@ -11,15 +11,13 @@ namespace Codeception\Extension;
 class PerformanceTest extends \Codeception\Extension
 {
     // maximum time allowed for a step to perform (seconds)
-    protected $config = [
-        'benchmark' => 3,
-        'padding'   => 50,
-    ];
+    protected $config = ['benchmark' => 3];
 
     private static $testTimes             = [];
     private static $slowStepsByTest       = [];
     private static $tmpCurrentTest        = 0;
     private static $tmpStepStartTime      = 0;
+    private static $padding               = 50;
 
 
     public function _initialize()
@@ -92,10 +90,10 @@ class PerformanceTest extends \Codeception\Extension
 
     public function afterSuite(\Codeception\Event\SuiteEvent $e)
     {
-        $this->writeln(str_pad('Slow Steps (more than ' . $this->config['benchmark'] . 's) ', $this->config['padding'], '-'));
+        $this->writeln(str_pad('Slow Steps (more than ' . self::$maxStepPerformanceTime . 's) ', $self::padding, '-'));
 
         foreach (self::$slowStepsByTest as $testname => $steps) {
-            $this->writeln(str_pad(' ' . $testname . ' ', $this->config['padding'], '-'));
+            $this->writeln(str_pad(' ' . $testname . ' ', $self::padding, '-'));
 
             foreach ($steps as $step) {
                 $this->writeln('  ' . $step->name . '(' . $step->time . 's)');
