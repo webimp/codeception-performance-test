@@ -16,23 +16,19 @@ use Codeception\Event\StepEvent;
 
 class PerformanceTest extends \Codeception\Platform\Extension
 {
-    /**
-     * Maximum time in second allowed for a step to be performant
-     *
-     * @var int
-     */
+    // maximum time allowed for a step to perform (seconds)
     public static $maxStepPerformanceTime = 1;
-    public static $testTimes              = [];
-    public static $slowStepsByTest        = [];
-    public static $tmpCurrentTest         = 0;
-    public static $tmpStepStartTime       = 0;
+
+    private static $testTimes             = [];
+    private static $slowStepsByTest       = [];
+    private static $tmpCurrentTest        = 0;
+    private static $tmpStepStartTime      = 0;
     private static $padding               = 50;
 
 
     public function _initialize()
     {
         $this->options['silent'] = false; // turn on printing for this extension
-        //$this->_reconfigure(['settings' => ['silent' => true]]); // turn off printing for everything else
     }
 
     // we are listening for events
@@ -92,11 +88,11 @@ class PerformanceTest extends \Codeception\Platform\Extension
         self::$testTimes[] = $test;
     }
 
-    // reset times and not performant tests arrays, in case multiple suites are launched
+    // reset times and slow test arrays, in case multiple suites are launched
 	public function beforeSuite(SuiteEvent $e)
 	{
-		self::$testTimes                = [];
-		self::$notPerformantStepsByTest = [];
+		self::$testTimes       = [];
+		self::$slowStepsByTest = [];
     }
 
     public function afterSuite(SuiteEvent $e)
