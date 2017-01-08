@@ -11,13 +11,15 @@ namespace Codeception\Extension;
 class PerformanceTest extends \Codeception\Extension
 {
     // maximum time allowed for a step to perform (seconds)
-    protected $config = ['benchmark' => 3];
+    protected $config = [
+        'benchmark' => 3,
+        'padding'   => 50,
+    ];
 
     private static $testTimes             = [];
     private static $slowStepsByTest       = [];
     private static $tmpCurrentTest        = 0;
     private static $tmpStepStartTime      = 0;
-    private static $padding               = 50;
 
 
     public function _initialize()
@@ -38,7 +40,7 @@ class PerformanceTest extends \Codeception\Extension
     // we are printing test status and time taken
     public function beforeTest(\Codeception\Event\TestEvent $e)
     {
-        self::$tmpCurrentTest = \Codeception\Test\Descriptor::getTestAsString($e->getTest());
+        $this->$tmpCurrentTest = \Codeception\Test\Descriptor::getTestAsString($e->getTest());
     }
 
     // we are printing test status and time taken
@@ -90,10 +92,10 @@ class PerformanceTest extends \Codeception\Extension
 
     public function afterSuite(\Codeception\Event\SuiteEvent $e)
     {
-        $this->writeln(str_pad('Slow Steps (more than ' . self::$maxStepPerformanceTime . 's) ', $self::padding, '-'));
+        $this->writeln(str_pad('Slow Steps (more than ' . $this->config['benchmark'] . 's) ', $this->config['padding'], '-'));
 
         foreach (self::$slowStepsByTest as $testname => $steps) {
-            $this->writeln(str_pad(' ' . $testname . ' ', $self::padding, '-'));
+            $this->writeln(str_pad(' ' . $testname . ' ', $this->config['padding'], '-'));
 
             foreach ($steps as $step) {
                 $this->writeln('  ' . $step->name . '(' . $step->time . 's)');
