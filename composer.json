@@ -1,26 +1,26 @@
 {
-  "name":"webimp/codeception-performance-test",
-  "description":"Codeception Extension to measure the performance of your tests",
-  "keywords":["performance", "acceptance testing", "functional testing", "unit testing", "tdd"],
-  "homepage":"https://github.com/webimp/codeception-performance-test",
+    "name":"webimp/codeception-performance-test",
+    "description":"Codeception Extension to measure the performance of your tests",
+    "keywords":["performance", "acceptance testing", "functional testing", "unit testing", "tdd"],
+    "homepage":"https://github.com/webimp/codeception-performance-test",
 
-  "type":"library",
-  "license":"GPL2",
-  "authors":[
-    {
-      "name":"Khairul Anwar",
-      "email":"khairul@webimp.com.sg",
-      "homepage":"https://www.webimp.com.sg/"
+    "type":"library",
+    "license":"GPL-2.0",
+    "authors":[
+        {
+            "name":"Khairul Anwar",
+            "email":"khairul@webimp.com.sg",
+            "homepage":"https://www.webimp.com.sg/"
+        }
+    ],
+    "require": {
+    },
+    "require-dev": {
+        "codeception/codeception": "@dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "Codeception\\Extension\\": "src"
+        }
     }
-  ],
-  "require": {
-  },
-  "require-dev": {
-    "codeception/codeception": "@dev"
-  },
-  "autoload": {
-    "psr-4": {
-      "Codeception\\Extension\\": "src"
-    }
-  }
 }
