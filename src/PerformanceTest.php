@@ -10,7 +10,7 @@
 class PerformanceTest extends \Codeception\Extension
 {
     // maximum time allowed for a step to perform (seconds)
-    public static $maxStepPerformanceTime = 1;
+    protected $config = ['benchmark' => 3];
 
     private static $testTimes             = [];
     private static $slowStepsByTest       = [];
@@ -55,8 +55,7 @@ class PerformanceTest extends \Codeception\Extension
 
         $stepTime = $stepEndTime - self::$tmpStepStartTime;
 
-        // If the Step has taken more than $maxStepPerformanceTime seconds
-        if ($stepTime > self::$maxStepPerformanceTime) {
+        if ($stepTime > $this->config['benchmark']) {
             $currentStep = (string) $e->getStep();
             $step        = new \stdClass;
             $step->name  = $currentStep;
