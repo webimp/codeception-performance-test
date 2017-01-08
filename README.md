@@ -32,6 +32,6 @@ settings:
     memory_limit: 1024M
 extensions:
     enabled:
-        - Codeception\Extension\PerformanceTest
+        - Codeception\Extension\PerformanceTest:
             benchmark: 3 # min seconds for step to be marked as "slow"
 ```
