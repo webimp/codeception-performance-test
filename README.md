@@ -1,4 +1,7 @@
 # PerformanceTest
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/5910781de43943cfa756382e133ff130)](https://www.codacy.com/app/KhairulA/codeception-performance-test?utm_source=github.com&utm_medium=referral&utm_content=webimp/codeception-performance-test&utm_campaign=badger)
+
 Codeception Extension to list out slow steps during the test. Compatible with [Codeception 2.2.7](http://codeception.com).
 
 After running your tests you will see a Performance Report of your slow tests:
