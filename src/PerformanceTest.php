@@ -41,13 +41,13 @@ class PerformanceTest extends \Codeception\Extension
     // we are printing test status and time taken
     public function beforeTest(\Codeception\Event\TestEvent $e)
     {
-        $this->tmpCurrentTest = \Codeception\Test\Descriptor::getTestAsString($e->getTest());
+        self::$tmpCurrentTest = \Codeception\Test\Descriptor::getTestAsString($e->getTest());
     }
 
     // we are printing test status and time taken
     public function beforeStep(\Codeception\Event\StepEvent $e)
     {
-        $this->tmpStepStartTime = round((float) microtime(true), 2);
+        self::$tmpStepStartTime = round((float) microtime(true), 2);
     }
 
     // we are printing test status and time taken
@@ -55,7 +55,7 @@ class PerformanceTest extends \Codeception\Extension
     {
         $benchmark   = round((float) $this->config['benchmark'], 2);
         $stepEndTime = round((float) microtime(true), 2);
-        $stepTime    = $stepEndTime - $this->tmpStepStartTime;
+        $stepTime    = $stepEndTime - self::$tmpStepStartTime;
 
         if ($stepTime > $benchmark) {
             $currentStep = (string) $e->getStep();
@@ -63,7 +63,7 @@ class PerformanceTest extends \Codeception\Extension
             $step->name  = $currentStep;
             $step->time  = round($stepTime, 2);
 
-            $this->slowStepsByTest[$this->tmpCurrentTest][] = $step;
+            self::$slowStepsByTest[self::$tmpCurrentTest][] = $step;
         }
     }
 
@@ -75,14 +75,14 @@ class PerformanceTest extends \Codeception\Extension
         // stack overflow: http://stackoverflow.com/questions/16825240/how-to-convert-microtime-to-hhmmssuu
         $test->time = round((float) $e->getTime(), 2);
 
-        $this->testTimes[] = $test;
+        self::$testTimes[] = $test;
     }
 
     // reset times and slow test arrays, in case multiple suites are launched
     public function beforeSuite(\Codeception\Event\SuiteEvent $e)
     {
-        $this->testTimes       = [];
-        $this->slowStepsByTest = [];
+        self::$testTimes       = [];
+        self::$slowStepsByTest = [];
     }
 
     public function afterSuite(\Codeception\Event\SuiteEvent $e)
@@ -90,13 +90,13 @@ class PerformanceTest extends \Codeception\Extension
         $this->writeln('');
         $this->writeln(str_pad('<bold>Slow Steps (more than ' . $this->config['benchmark'] . 's)</bold> ', $this->config['padding'], '-'));
 
-        foreach ($this->slowStepsByTest as $testname => $steps) {
-            $test_role = substr($testname, 0, stripos($testname, ':') + 1);
-            $test_name = substr($testname, stripos($testname, ':') + 1);
+        foreach (self::$slowStepsByTest as $testName => $steps) {
+            $test_role = substr($testName, 0, strpos($testName, ':') + 1);
+            $test_name = substr($testName, strpos($testName, ':') + 1);
 
-            $testname = '<focus>' . $test_role . '</focus>' . $test_name;
+            $testName = '<focus>' . $test_role . '</focus>' . $test_name;
 
-            $this->writeln($testname);
+            $this->writeln($testName);
 
             foreach ($steps as $step) {
                 $this->writeln('  ' . $step->name . ' <info>(' . $step->time . 's)</info>');
